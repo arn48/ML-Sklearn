@@ -6,7 +6,7 @@ from PIL import Image
 import PIL.ImageOps
 
 digits = datasets.load_digits()
-img = Image.open('two8.jpg').convert('L')
+img = Image.open('dataset/two8.jpg').convert('L')
 grayscaleinv = PIL.ImageOps.invert(img)
 dt = np.asarray(grayscaleinv)
 reshape = dt.reshape(1,64)
@@ -22,7 +22,3 @@ clf.fit(X,y)
 print(clf.predict([digits.data[1024]]))
 print(digits.target[1024])
 print(clf.predict(reshape))
-plt.imshow(dt, cmap=plt.cm.gray_r, interpolation='nearest')
-plt.show()
-plt.imshow(reshape, cmap=plt.cm.gray_r, interpolation='nearest')
-plt.show()
