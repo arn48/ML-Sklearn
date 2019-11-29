@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn import svm
-from skimage.io import imread
 import numpy as np
 from PIL import Image
 import PIL.ImageOps
