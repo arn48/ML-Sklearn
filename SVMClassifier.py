@@ -4,8 +4,6 @@ from sklearn import svm
 import numpy as np
 from PIL import Image
 import PIL.ImageOps
-import scipy.misc
-from skimage import img_as_ubyte
 
 
 digits = datasets.load_digits()
