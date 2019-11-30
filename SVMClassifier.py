@@ -11,7 +11,6 @@ digits = datasets.load_digits()
 
 def extractimagefeature( filename ):
     img = Image.open(filename).resize((8, 8), Image.ANTIALIAS).convert('L')
-
     grayscaleinv = PIL.ImageOps.invert(img)
     dt = np.asarray(grayscaleinv)
     imagenormarr = []
