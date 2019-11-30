@@ -4,23 +4,34 @@ from sklearn import svm
 import numpy as np
 from PIL import Image
 import PIL.ImageOps
+import scipy.misc
+from skimage import img_as_ubyte
+
 
 digits = datasets.load_digits()
-img = Image.open('two8.jpg').convert('L')
-grayscaleinv = PIL.ImageOps.invert(img)
-dt = np.asarray(grayscaleinv)
-reshape = dt.reshape(1,64)
-print(reshape)
-print(digits.data[1024])
-print(len(digits.data))
-print(digits.data[1024])
-clf = svm.SVC(gamma=0.001, C=100)
 
+
+def extractimagefeature( filename ):
+    img = Image.open(filename).resize((8, 8), Image.ANTIALIAS).convert('L')
+
+    grayscaleinv = PIL.ImageOps.invert(img)
+    dt = np.asarray(grayscaleinv)
+    imagenormarr = []
+    for val in dt:
+        eachelement = np.divide(val, [16, 16, 16, 16, 16, 16, 16, 16])
+        imagenormarr = np.append(imagenormarr, eachelement)
+    imagetofeature = np.asarray(imagenormarr).astype(int)
+    imgdata = imagenormarr.reshape(8, 8)
+    return imagetofeature,imgdata
+
+
+clf = svm.SVC(gamma=0.00001, C=100)
 X,y = digits.data[:-10], digits.target[:-10]
 clf.fit(X,y)
-
-print(clf.predict([digits.data[1024]]))
-print(digits.target[1024])
-print(clf.predict(reshape))
-plt.imshow(dt, cmap=plt.cm.gray_r, interpolation='nearest')
+imagefeture,imagedata = extractimagefeature('dataset/two8new.jpg')
+print("predicted value")
+print(clf.predict([imagefeture]))
+# plt.imshow(digits.images[22], cmap=plt.cm.gray_r, interpolation='nearest')
+# plt.show()
+plt.imshow(imagedata, cmap=plt.cm.gray_r, interpolation='nearest')
 plt.show()
